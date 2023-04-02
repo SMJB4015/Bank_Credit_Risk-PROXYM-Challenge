@@ -1,0 +1,6 @@
+Sex : female , male
+Job : 0,1,2,3
+Housing : own ,free , rent
+Saving_accounts : NA , little , quite rich , rich , moderate
+Checking_account : NA , little , quite rich , rich , moderate 
+Purpose : radio/TV , education , furniture/equipment , car , business , domestic appliances , repairs , vacation/others

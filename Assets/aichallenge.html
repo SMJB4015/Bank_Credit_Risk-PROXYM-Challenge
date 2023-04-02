@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Form Prediction</title>
+    <style>
+        form {
+            background-color: #f2f2f2;
+            border-radius: 10px;
+            padding: 20px;
+            width: 400px;
+            margin: 0 auto;
+            font-family: Arial, sans-serif;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+            animation: pulse 2s infinite;
+        }
+        
+        label {
+            display: inline-block;
+            width: 150px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        select {
+            padding: 5px 10px;
+            border-radius: 5px;
+            border: none;
+            margin-bottom: 20px;
+            font-size: 16px;
+            width: 100%;
+            background-color: #fff;
+            transition: background-color 0.3s ease;
+        }
+        
+        select:hover {
+            background-color: #f0f0f0;
+        }
+        
+        input[type="submit"] {
+            background-color: #4CAF50;
+            border: none;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        
+        input[type="submit"]:hover {
+            background-color: #3e8e41;
+        }
+        
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+        
+        .error {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <form method="post" action="/predict">
+        <label for="sex">Sex:</label>
+        <select id="sex" name="Sex">
+            <option value="female">Female</option>
+            <option value="male">Male</option>
+        </select>
+
+        <label for="job">Job:</label>
+        <select id="job" name="Job">
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">3</option>
+            <option value="3">4</option>
+        </select>
+
+        <label for="housing">Housing:</label>
+        <select id="housing" name="Housing">
+            <option value="own">Own</option>
+            <option value="free">Free</option>
+            <option value="rent">Rent</option>
+        </select>
+
+        <label for="saving_accounts">Saving Accounts:</label>
+        <select id="saving_accounts" name="Saving_accounts">
+            <option value="NA">NA</option>
+            <option value="little">Little</option>
+            <option value="quite rich">Quite rich</option>
+            <option value="rich">Rich</option>
+            <option value="moderate">Moderate</option>
+        </select>
+
+        <label for="checking_account">Checking Account:</label>
+        <select id="checking_account" name="Checking_account">
+            <option value="NA">NA</option>
+            <option value="little">Little</option>
+            <option value="quite rich">Quite rich</option>
+            <option value="rich">Rich</option>
+            <option value="moderate">Moderate</option>
+        </select>
+
+        <label for="purpose">Purpose:</label>
+        <select id="purpose" name="Purpose">
+            <option value="radio/TV">Radio/TV</option>
+            <option value="education">Education</option>
+            <option value="furniture/equipment">Furniture/Equipment</option>
+            <option value="car">Car</option>
+            <option value="business">Business</option>
+            <option value="domestic appliances">Domestic Appliances</option>
+            <option value="repairs">Repairs</option>
+            <option value="vacation/others">Vacation/Others</option>
+        </select>
+
+        <button type="submit">Predict</button>
+    </form>
+
+    <p id="error-message" class="error" style="display: none;"></p>
+
+    <script>
+        document.querySelector('form').addEventListener('submit', (event) => {
+
+            event.preventDefault();
+            fetch('http://127.0.0.1:5000/predict', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => {
+                    if (response.ok) {
+                        return response.json();
+                    } else {
+                        throw new Error('Network response was not ok.');
+                    }
+                })
+                .then(data => {
+
+                    alert(`Prediction result: ${data.result}`);
+                })
+                .catch(error => {
+
+                    const errorMessage = document.getElementById('error-message');
+                    errorMessage.style.display = 'block';
+                    errorMessage.textContent = error.message;
+                });
+        });
+    </script>
+</body>
+
+</html>
